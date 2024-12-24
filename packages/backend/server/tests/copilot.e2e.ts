@@ -16,6 +16,7 @@ import {
   CopilotProviderService,
   FalProvider,
   OpenAIProvider,
+  PerplexityProvider,
   registerCopilotProvider,
   unregisterCopilotProvider,
 } from '../src/plugins/copilot/providers';
@@ -91,6 +92,7 @@ test.beforeEach(async t => {
 
   unregisterCopilotProvider(OpenAIProvider.type);
   unregisterCopilotProvider(FalProvider.type);
+  unregisterCopilotProvider(PerplexityProvider.type);
   registerCopilotProvider(MockCopilotTestProvider);
 
   await prompt.set(promptName, 'test', [
