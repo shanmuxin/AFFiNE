@@ -9,6 +9,7 @@ import {
 } from '@affine/component';
 import { AIChatBlockSchema } from '@affine/core/blocksuite/blocks';
 import { WorkspaceServerService } from '@affine/core/modules/cloud';
+import { DesktopApiService } from '@affine/core/modules/desktop-api';
 import { type DocService, DocsService } from '@affine/core/modules/doc';
 import type { EditorService } from '@affine/core/modules/editor';
 import { EditorSettingService } from '@affine/core/modules/editor-setting';
@@ -53,6 +54,7 @@ import {
   EmbedLinkedDocBlockConfigExtension,
   GenerateDocUrlExtension,
   MobileSpecsPatches,
+  NativeClipboardExtension,
   NotificationExtension,
   ParseDocUrlExtension,
   PeekViewExtension,
@@ -617,4 +619,11 @@ export function patchForAttachmentEmbedViews(
       }));
     },
   };
+}
+
+export function patchForClipboardInElectron(framework: FrameworkProvider) {
+  const desktopApi = framework.get(DesktopApiService);
+  return NativeClipboardExtension({
+    copyAsPNG: desktopApi.handler.clipboard.copyAsPNG,
+  });
 }
